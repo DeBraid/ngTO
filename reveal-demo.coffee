@@ -21,7 +21,4 @@ if Meteor.isClient
       transition = $(event.currentTarget).data 'value'
       Reveal.configure transition: transition
 
-  Template.themeSelect.events
-    'click .item': (event) ->
-      theme = $(event.currentTarget).data 'value'
-      Reveal.configure theme: theme
+
