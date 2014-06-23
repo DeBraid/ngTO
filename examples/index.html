@@ -61,9 +61,8 @@
 						</a>
 					</section>
 					<section>
-						<h2>Step 1</h2>
-						<p>after csv to json, set up code in d3</p>
-						<pre><code data-trim contenteditable>
+						<h2>csv to json, then </h2>
+						<h3><pre><code data-trim contenteditable>
 							var myGDP = [],
 							    myURATE = [],
 							    myINCOME = [];
@@ -73,14 +72,13 @@
 							    .defer(d3.json, '/js/citiesIncome.json')
 							    .defer(d3.json, '/js/unemprate.json')
 							    .await(makeChart);
-						</code></pre>
+						</code></pre></h3>
 
 					</section>
 
 					<section>
-						<h2>Step 2</h2>
-						<p>json to my custom data object</p>
-						<pre><code data-trim contenteditable>
+						<h2>json to my custom data object</h2>
+						<h3><pre><code data-trim contenteditable>
 
             function makeChart(error, gdp, income, urate) {
 
@@ -89,6 +87,14 @@
                   cities.forEach(function (city) {
 
                       gdp.forEach(function (d) {
+
+            </code></pre></h3>
+
+					</section>
+
+					<section>
+						<h2>combine</h2>
+						<h3><pre><code data-trim contenteditable>
 
                           gdp[city] = _.zip(d.Period, d[city]);
 
@@ -100,26 +106,29 @@
                           myGDP.push(cityByCityGdp);
 
                       });
-            </code></pre>
 
+					    var finalData = _.merge(myGDP, myINCOME, myURATE);
+            
+            </code></pre></h3>
 					</section>
 
-										<section>
-						<h2>Step 3</h2>
-						<p>combine</p>
-						<pre><code data-trim contenteditable>
+					<section>
+						<h2>result</h2>
+						<h3><pre><code data-trim contenteditable>
 
 					    var finalData = _.merge(myGDP, myINCOME, myURATE);
             
 							[
-										{ city: "Toronto" },
-										{ gdp: [...] },
-										{ income: [...] },
-										{ uRate: [1987.01, 33423.22]}
+							 {
+									 city: "Toronto",
+									 gdp: [...],
+									 income: [...],
+									 uRate: [1987.01, 33423.22]
+							 }
 							];
 
 							
-            </code></pre>
+            </code></pre></h3>
 						<a href="http://hes.brace.io">Or see devtools console here.</a>
 
 					</section>
@@ -129,7 +138,7 @@
 						<h2>Lesson</h2>
 						<p>think in API terms.  what is the endpoint?</p>
 						<p>work backwards, or inside out.</p>
-						<p>build each indivual array or object, then combine</p>
+						<p>build each array or object, then combine</p>
 					</section>
 				</section>
 				<!-- end d3js vertical section -->
@@ -144,13 +153,13 @@
 
 					<section>
 						<h4>Provide a list of cities as an array</h4>
-						<pre><code data-trim contenteditable>
+						<h3><pre><code data-trim contenteditable>
 							function TypeaheadCtrl($scope) {
 								 
 							  $scope.cities = ["Toronto","St. John's","Montreal","Vancouver","Saskatoon"]; 
 
 							}
-						</code></pre>
+						</code></pre></h3>
 						<p>go-go ng-repeat</p>
 					</section>
 				</section>
