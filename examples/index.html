@@ -26,7 +26,7 @@
 				<section>
 					<h2>Canadian Economy Over Time: 1987 - 2014</h2>
 					<p class="fragment roll-in">
-						The Viz from <a href="http://www.hamiltoneconomicsummit.ca/economy-animation.html" target="_blank">#HES2014</a>.
+						Demo from <a href="http://www.hamiltoneconomicsummit.ca/economy-animation.html" target="_blank">#HES2014</a>.
 					</p>
 				</section>
 				
@@ -52,31 +52,76 @@
 				<!-- nested vertical slides for d3js -->
 				<section>
 					<section>
-						<h2>d3js + lodash code</h2>
+						<h2>wrangle the data</h2>
 						<p>
-							Add image or code here.
+							combo of d3js and lodash
 						</p>
 						<a href="#" class="image navigate-down">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
+							<img width="260" height="90" src="http://www.pubnub.com/blog/wp-content/uploads/2014/01/D3.js-Logo.png" alt="Down arrow">
 						</a>
 					</section>
 					<section>
-						<h2>Basement Level 1</h2>
-						<p>add another step here</p>
+						<h2>Step 1</h2>
+						<p>after csv to json, set up code in d3</p>
+						<pre><code data-trim contenteditable>
+							var myGDP = [],
+							    myURATE = [],
+							    myINCOME = [];
+
+							queue()
+							    .defer(d3.json, '/js/citiesgdp.json')
+							    .defer(d3.json, '/js/citiesIncome.json')
+							    .defer(d3.json, '/js/unemprate.json')
+							    .await(makeChart);
+						</code></pre>
+
 					</section>
+
 					<section>
-						<h2>Basement Level 2</h2>
-						<p>Add another step here</p>
-						<a class="test" href="http://cornify.com">
-							<img width="280" height="326" src="https://s3.amazonaws.com/hakim-static/reveal-js/cornify.gif" alt="Unicorn">
-						</a>
+						<h2>Step 2</h2>
+						<p>json to my custom data object</p>
+						<pre><code data-trim contenteditable>
+
+            function makeChart(error, gdp, income, urate) {
+
+                  var cities = Object.keys(gdp[0]);
+
+                  cities.forEach(function (city) {
+
+                      gdp.forEach(function (d) {
+
+                          gdp[city] = _.zip(d.Period, d[city]);
+
+                          var cityByCityGdp = {
+                              "city": city,
+                              "gdp": gdp[city]
+                          };
+
+                          myGDP.push(cityByCityGdp);
+
+                      });
+            </code></pre>
+
 					</section>
+
+										<section>
+						<h2>Step 3</h2>
+						<p>combine</p>
+						<pre><code data-trim contenteditable>
+
+					    var finalData = _.merge(myGDP, myINCOME, myURATE);
+            
+              Endpoint: <a href="http://hes.brace.io/">in browser console</a>
+            </code></pre>
+
+					</section>
+
+
 					<section>
-						<h2>Basement Level 3</h2>
-						<p>That's it, time to go back up.</p>
-						<a href="#/2" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-						</a>
+						<h2>Lesson</h2>
+						<p>think in API terms.  what is the endpoint?</p>
+						<p>work backwards, or inside out.</p>
+						<p>build each indivual array or object, then combine</p>
 					</section>
 				</section>
 				<!-- end d3js vertical section -->
